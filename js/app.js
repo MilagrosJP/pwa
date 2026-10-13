@@ -3,7 +3,9 @@ const bannerConexion = document.getElementById('conexion-banner');
 
 // 1) Registrar el Service Worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log('Service Worker registrado con éxito'))
+    .catch((err) => console.log('Error al registrar Service Worker:', err));
 
   // 2) Escuchar los mensajes que mande el Service Worker
   navigator.serviceWorker.addEventListener('message', (e) => {
@@ -42,18 +44,26 @@ if ('Notification' in window && Notification.permission !== 'granted') {
 }
 
 // 3) Programar los botones de compra para pedir sincronización
-const botonesComprar = document.querySelectorAll('.btn-comprar');
+document.addEventListener('DOMContentLoaded', () => {
+  const botonesComprar = document.querySelectorAll('.btn-comprar');
 
-botonesComprar.forEach(btn => {
-  btn.addEventListener('click', async () => {
-    const productoNombre = btn.getAttribute('data-producto');
-    const registro = await navigator.serviceWorker.ready;
+  botonesComprar.forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const productoNombre = btn.getAttribute('data-producto');
+      
+      try {
+        const registro = await navigator.serviceWorker.ready;
 
-    if ('sync' in registro) {
-      await registro.sync.register('tienda-deportiva-sync');
-      estado.textContent = `🛍️ Pedido de "${productoNombre}" guardado. Te avisaremos al recuperar la conexión.`;
-    } else {
-      estado.textContent = 'Tu navegador no soporta Background Sync (usa Chrome o Edge).';
-    }
+        if ('sync' in registro) {
+          await registro.sync.register('tienda-deportiva-sync');
+          estado.textContent = `🛍️ Pedido de "${productoNombre}" guardado. Te avisaremos al recuperar la conexión.`;
+        } else {
+          estado.textContent = 'Tu navegador no soporta Background Sync (usa Chrome o Edge).';
+        }
+      } catch (error) {
+        console.error(error);
+        estado.textContent = 'Hubo un error al registrar la sincronización.';
+      }
+    });
   });
 });
