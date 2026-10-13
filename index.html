@@ -1,35 +1,64 @@
-<section class="catalogo">
-  <h2>Catálogo Destacado</h2>
-  
-  <div class="productos-grid">
-    <!-- Producto 1 -->
-    <div class="card">
-      <div class="imagen-container">
-        <img src="img/leggings.jpg" alt="Leggings High-Waist Pro">
-      </div>
-      <h3>Leggings High-Waist Pro</h3>
-      <p class="precio">$599 MXN</p>
-      <button class="btn-comprar">Agregar al Carrito</button>
-    </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlamFit Sport - Tienda Deportiva</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Banner de estado de conexión -->
+  <div id="conexion-banner" class="online">Conectado a la red</div>
 
-    <!-- Producto 2 -->
-    <div class="card">
-      <div class="imagen-container">
-        <img src="img/top.jpg" alt="Top Deportivo Soporte Alto">
-      </div>
-      <h3>Top Deportivo Soporte Alto</h3>
-      <p class="precio">$349 MXN</p>
-      <button class="btn-comprar">Agregar al Carrito</button>
-    </div>
+  <header>
+    <h1>GlamFit Sport 🏃‍♀️🛍️</h1>
+    <p>Moda y rendimiento deportivo para nosotras</p>
+  </header>
 
-    <!-- Producto 3 -->
-    <div class="card">
-      <div class="imagen-container">
-        <img src="img/tenis.jpg" alt="Tenis Running Ultralight">
+  <main>
+    <section class="catalogo">
+      <h2>Catálogo Destacado</h2>
+      
+      <div class="productos-grid">
+        <!-- Producto 1 -->
+        <div class="card">
+          <div class="imagen-container">
+            <img src="leggings.jpg" alt="Leggings High-Waist Pro">
+          </div>
+          <h3>Leggings High-Waist Pro</h3>
+          <p class="precio">$599 MXN</p>
+          <!-- Botón de compra que activa el sync -->
+          <button class="btn-comprar" data-producto="Leggings High-Waist Pro">Agregar al Carrito</button>
+        </div>
+
+        <!-- Producto 2 -->
+        <div class="card">
+          <div class="imagen-container">
+            <img src="top.jpg" alt="Top Deportivo Soporte Alto">
+          </div>
+          <h3>Top Deportivo Soporte Alto</h3>
+          <p class="precio">$349 MXN</p>
+          <button class="btn-comprar" data-producto="Top Deportivo Soporte Alto">Agregar al Carrito</button>
+        </div>
+
+        <!-- Producto 3 -->
+        <div class="card">
+          <div class="imagen-container">
+            <img src="tenis.jpg" alt="Tenis Running Ultralight">
+          </div>
+          <h3>Tenis Running Ultralight</h3>
+          <p class="precio">$1,299 MXN</p>
+          <button class="btn-comprar" data-producto="Tenis Running Ultralight">Agregar al Carrito</button>
+        </div>
       </div>
-      <h3>Tenis Running Ultralight</h3>
-      <p class="precio">$1,299 MXN</p>
-      <button class="btn-comprar">Agregar al Carrito</button>
+    </section>
+
+    <!-- Estado donde aparecerán los mensajes de sincronización -->
+    <div style="text-align: center; margin: 30px;">
+      <p id="estado" style="font-weight: bold; font-size: 16px; color: #c71585;">Esperando acción...</p>
     </div>
-  </div>
-</section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

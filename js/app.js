@@ -1,5 +1,4 @@
 const estado = document.getElementById('estado');
-const btn = document.getElementById('btn');
 const bannerConexion = document.getElementById('conexion-banner');
 
 // 1) Registrar el Service Worker
@@ -13,7 +12,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Control de estado de conexión a Internet
+// Control de estado de conexión a Internet (Online / Offline)
 function actualizarEstadoConexion() {
   if (navigator.onLine) {
     bannerConexion.textContent = 'Conectado a la red 🟢';
@@ -28,7 +27,7 @@ window.addEventListener('online', actualizarEstadoConexion);
 window.addEventListener('offline', actualizarEstadoConexion);
 actualizarEstadoConexion();
 
-// Notificaciones del navegador (si están permitidas)
+// Notificaciones del navegador
 function mostrarNotificacionLocal(mensaje) {
   if (Notification.permission === 'granted') {
     new Notification('GlamFit Sport', {
@@ -38,19 +37,23 @@ function mostrarNotificacionLocal(mensaje) {
   }
 }
 
-// Pedir permisos de notificación al cargar
 if ('Notification' in window && Notification.permission !== 'granted') {
   Notification.requestPermission();
 }
 
-// 3) Al pulsar el botón, pedimos la sincronización de compra
-btn.addEventListener('click', async () => {
-  const registro = await navigator.serviceWorker.ready;
+// 3) Programar los botones de compra para pedir sincronización
+const botonesComprar = document.querySelectorAll('.btn-comprar');
 
-  if ('sync' in registro) {
-    await registro.sync.register('tienda-deportiva-sync');
-    estado.textContent = '🛍️ Pedido guardado. Te avisaremos y enviaremos al recuperar la conexión.';
-  } else {
-    estado.textContent = 'Tu navegador no soporta Background Sync (usa Chrome o Edge).';
-  }
+botonesComprar.forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const productoNombre = btn.getAttribute('data-producto');
+    const registro = await navigator.serviceWorker.ready;
+
+    if ('sync' in registro) {
+      await registro.sync.register('tienda-deportiva-sync');
+      estado.textContent = `🛍️ Pedido de "${productoNombre}" guardado. Te avisaremos al recuperar la conexión.`;
+    } else {
+      estado.textContent = 'Tu navegador no soporta Background Sync (usa Chrome o Edge).';
+    }
+  });
 });
